@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>random code demo</title>
+    <style>
+        #code{
+            display: inline-block;
+            width: 80px; height: 30px;
+            background: #aaa;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 7px;
+            padding-left: 7px;
+            vertical-align: middle;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body onload="createRandomCode()">
+    <input id="input" type="text"  placeholder="请输入验证码">
+    <!--用a链接作为验证码的图片-->
+    <a href="javascript:" id="code" onclick="createRandomCode(this)"></a>
+    <button id="btn" type="submit" onclick="verifyRandomCode()">submit</button>
+    <p id="line"></p>
+    <script>
+        function createRandomCode(){
+            //全局变量code
+            code = "";
+            let numsAndLetters = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z']
+            for (let i = 0; i < 4; i++){
+                code += numsAndLetters[Math.floor(Math.random()*36)];
+            }
+            let codeCanvas = document.getElementById("code");
+            codeCanvas.innerHTML = code;
+            console.log(code);
+        }
+        function verifyRandomCode(){
+            let input = document.getElementById("input").value.toUpperCase();
+            let line = document.getElementById("line");
+            console.log(input);
+            if (code == input){
+                window.open('http://www.google.com','_self');
+            }else {
+                line.innerText = "验证码错误";
+            }
+            createRandomCode();
+        }
+    </script>
+</body>
+</html>
