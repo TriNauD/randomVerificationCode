@@ -4,7 +4,15 @@
     <meta charset="UTF-8">
     <title>random code demo</title>
     <style>
+        #verificationCode{
+            text-align: center;
+            margin-top: 300px;
+            /*display: flex;*/
+            /*justify-content: center;*/
+            padding-right: 10px;
+        }
         #code{
+            /*inline-block可以像inline一样同行显示，又可以像block一样设置宽高*/
             display: inline-block;
             width: 80px; height: 30px;
             background: #aaa;
@@ -17,14 +25,25 @@
             vertical-align: middle;
             font-weight: bold;
         }
+        #btn{
+            display: inline-block;
+            width: 50px; height: 30px;
+            border: none;
+            background-color: darkseagreen;
+            color: white;
+            font-size: 13px;
+        }
     </style>
 </head>
 <body onload="createRandomCode()">
-    <input id="input" type="text"  placeholder="请输入验证码">
-    <!--用a链接作为验证码的图片-->
-    <a href="javascript:" id="code" onclick="createRandomCode(this)"></a>
-    <button id="btn" type="submit" onclick="verifyRandomCode()">submit</button>
-    <p id="line"></p>
+    <div id="verificationCode">
+        <!--用a链接作为验证码的图片-->
+        <input id="input" type="text"  placeholder="请输入验证码">
+        <a href="javascript:" id="code" onclick="createRandomCode(this)"></a>
+        <button id="btn" type="submit" onclick="verifyRandomCode()">提交</button>
+        <p id="line"></p>
+    </div>
+
     <script>
         function createRandomCode(){
             //全局变量code
@@ -42,6 +61,7 @@
             let line = document.getElementById("line");
             console.log(input);
             if (code == input){
+                line.innerText = " ";
                 window.open('http://www.google.com','_self');
             }else {
                 line.innerText = "验证码错误";
