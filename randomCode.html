@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <title>random code demo</title>
     <style>
-        #verificationCode{
+        #verificationCode {
             text-align: center;
-            margin-top: 300px;
-            /*display: flex;*/
-            /*justify-content: center;*/
-            padding-right: 10px;
-        }
-        #code{
-            /*inline-block可以像inline一样同行显示，又可以像block一样设置宽高*/
-            display: inline-block;
-            width: 80px; height: 30px;
-            background: #aaa;
-            text-align: center;
-            line-height: 30px;
-            color: #fff;
-            text-decoration: none;
-            letter-spacing: 7px;
-            padding-left: 7px;
             vertical-align: middle;
-            font-weight: bold;
+            margin: 300px auto;
+            width: 500px;
+            height: 50px;
+            background-color: cornflowerblue;
         }
-        #btn{
+
+        #input {
             display: inline-block;
-            width: 50px; height: 30px;
+            outline: none;
+        }
+
+        #codeCanvas {
+            display: inline-block;
+            background-color: whitesmoke;
+            letter-spacing: 5px;
+        }
+
+        #btn {
+            display: inline-block;
+            width: 50px;
+            height: 30px;
             border: none;
             background-color: darkseagreen;
             color: white;
@@ -36,38 +36,45 @@
     </style>
 </head>
 <body onload="createRandomCode()">
-    <div id="verificationCode">
-        <!--用a链接作为验证码的图片-->
-        <input id="input" type="text"  placeholder="请输入验证码">
-        <a href="javascript:" id="code" onclick="createRandomCode(this)"></a>
-        <button id="btn" type="submit" onclick="verifyRandomCode()">提交</button>
-        <p id="line"></p>
-    </div>
+<div id="verificationCode">
+    <input id="input" type="text" placeholder="请输入验证码">
+    <canvas id="codeCanvas" width="80px" height="30px" onclick="createRandomCode(this)"></canvas>
+    <button id="btn" type="submit" onclick="verifyRandomCode()">提交</button>
+    <p id="line"></p>
+</div>
 
-    <script>
-        function createRandomCode(){
-            //全局变量code
-            code = "";
-            let numsAndLetters = [0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R', 'S','T','U','V','W','X','Y','Z']
-            for (let i = 0; i < 4; i++){
-                code += numsAndLetters[Math.floor(Math.random()*36)];
-            }
-            let codeCanvas = document.getElementById("code");
-            codeCanvas.innerHTML = code;
-            console.log(code);
+<script>
+    function createRandomCode() {
+        //全局变量code
+        code = "";
+        let numsAndLetters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+        for (let i = 0; i < 4; i++) {
+            code += numsAndLetters[Math.floor(Math.random() * 36)];
         }
-        function verifyRandomCode(){
-            let input = document.getElementById("input").value.toUpperCase();
-            let line = document.getElementById("line");
-            console.log(input);
-            if (code == input){
-                line.innerText = " ";
-                window.open('http://www.google.com','_self');
-            }else {
-                line.innerText = "验证码错误";
-            }
-            createRandomCode();
+
+        let codeCanvas = document.getElementById("codeCanvas");
+        if (codeCanvas.getContext) {
+            let ctx = codeCanvas.getContext('2d');
+            ctx.fillStyle = "whitesmoke"
+            ctx.font = "20px Arial";
+            ctx.fillRect(0, 0, codeCanvas.width, codeCanvas.height);
+            ctx.strokeText(code, 8, 20);
         }
-    </script>
+        console.log(code);
+    }
+
+    function verifyRandomCode() {
+        let input = document.getElementById("input").value.toUpperCase();
+        let line = document.getElementById("line");
+        console.log(input);
+        if (code == input) {
+            line.innerText = " ";
+            window.open('http://www.google.com', '_self');
+        } else {
+            line.innerText = "验证码错误";
+        }
+        createRandomCode();
+    }
+</script>
 </body>
 </html>
